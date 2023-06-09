@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app_c8_friday/models/category_model.dart';
 import 'package:news_app_c8_friday/screens/tab_controller.dart';
 import 'package:news_app_c8_friday/screens/tab_item.dart';
 
@@ -8,6 +9,8 @@ import '../shared/remote/api_manager.dart';
 
 class HomeScreen extends StatefulWidget {
 
+  CategoryModel categoryModel;
+  HomeScreen(this.categoryModel);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: FutureBuilder<SourceResponse?>(
-          future: ApiManager.getSources(),
+          future: ApiManager.getSources(widget.categoryModel.id),
           builder: (context , snapshot){
             if(snapshot.hasError){
               return Center(

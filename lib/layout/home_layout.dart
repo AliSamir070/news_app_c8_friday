@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:news_app_c8_friday/models/category_model.dart';
+import 'package:news_app_c8_friday/screens/categories_scrreen.dart';
 
 import '../models/SourceResponse.dart';
 import '../models/Sources.dart';
+import '../screens/drawer_widget.dart';
 import '../screens/home_screen.dart';
 import '../shared/remote/api_manager.dart';
 
@@ -16,13 +19,11 @@ class _HomeLayoutState extends State<HomeLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      drawer: Drawer(
-        child: Container(color: Colors.red,width: 180),
-      ),
+
+      drawer: DrawerWidget(onDrawerClicked),
       appBar: AppBar(
-        toolbarHeight: 100,
-        title: Text("News App"),
+
+        title: Text(categoryModel==null?"News App":categoryModel!.name),
         centerTitle: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -31,7 +32,27 @@ class _HomeLayoutState extends State<HomeLayout> {
           )
         ),
       ),
-      body: HomeScreen(),
+      body:categoryModel==null?
+      CategoriesScreen(changeCategory)
+      :HomeScreen(categoryModel!),
     );
+  }
+
+  CategoryModel? categoryModel=null;
+  void onDrawerClicked(number){
+    if(number==DrawerWidget.CATEGORIES){
+      categoryModel=null;
+    }else if(number==DrawerWidget.SETTINGS){
+      // open settings tab
+    }
+    setState(() {
+      Navigator.pop(context);
+    });
+  }
+  void changeCategory(category){
+    categoryModel=category;
+    setState(() {
+
+    });
   }
 }

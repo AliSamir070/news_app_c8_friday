@@ -11,7 +11,7 @@ class MyThemeData {
         bodyLarge: GoogleFonts.poppins(
             fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
         bodyMedium: GoogleFonts.poppins(
-            fontSize: 18, fontWeight: FontWeight.w600, color: lightColor),
+            fontSize: 14, fontWeight: FontWeight.w600, color: lightColor),
         bodySmall: GoogleFonts.roboto(
             fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black54),
       ),
@@ -22,7 +22,7 @@ class MyThemeData {
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: lightColor,
-        iconTheme: IconThemeData(color: Colors.black54, size: 30),
+        iconTheme: IconThemeData(color: Colors.white, size: 30),
       ));
   static ThemeData darkTheme = ThemeData();
 }
