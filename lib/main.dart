@@ -1,8 +1,12 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app_c8_friday/layout/home_layout.dart';
 import 'package:news_app_c8_friday/shared/styles/my_theme.dart';
 
+import 'cubit_changes.dart';
+
 void main() {
+  Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
 }
 

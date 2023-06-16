@@ -5,7 +5,7 @@ import 'package:news_app_c8_friday/screens/categories_scrreen.dart';
 import '../models/SourceResponse.dart';
 import '../models/Sources.dart';
 import '../screens/drawer_widget.dart';
-import '../screens/home_screen.dart';
+import '../screens/home_screen/home_screen.dart';
 import '../shared/remote/api_manager.dart';
 
 class HomeLayout extends StatefulWidget {
