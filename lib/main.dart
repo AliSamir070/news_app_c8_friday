@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:news_app_c8_friday/layout/home_layout.dart';
-import 'package:news_app_c8_friday/shared/styles/my_theme.dart';
+
+import 'layout/details_screen.dart';
+import 'layout/home.dart';
+import 'layout/web_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: MyThemeData.lightTheme,
-      routes: {
-        HomeLayout.routeName:(context)=>HomeLayout()
-      },
-
-      initialRoute: HomeLayout.routeName,
       debugShowCheckedModeBanner: false,
+      initialRoute: HomeScreen.routeName,
+      routes: {
+        HomeScreen.routeName: (context) => HomeScreen(),
+        DetailsScreen.routeName:(context)=>DetailsScreen(),
+        WebViewScreen.routeName:(context)=>WebViewScreen()
+      },
     );
   }
 }
-
