@@ -3,6 +3,7 @@ import 'package:news_app_c8_friday/screens/widgets/news_item.dart';
 import 'package:news_app_c8_friday/screens/widgets/source_item.dart';
 
 
+import '../models/NewsResponse.dart';
 import '../models/SourcesResponse.dart';
 import '../shared/network/remote/api_manager.dart';
 
@@ -17,6 +18,26 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   int selectedIndex = 0;
+  int page = 1;
+  late ScrollController scrollController;
+  List<Articles> articles = [];
+  late Future getNews;
+  @override
+  void initState() {
+    getNews = ApiManager.getNewsData(sourceId: widget.sources[selectedIndex].id ?? "",q:widget.query ,page: page);
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      if(scrollController.position.atEdge){
+        if(scrollController.position.pixels!=0){
+          ++page;
+          getNews = ApiManager.getNewsData(sourceId: widget.sources[selectedIndex].id ?? "",q:widget.query ,page: page);
+          setState(() {
+
+          });
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +59,7 @@ class _TabsScreenState extends State<TabsScreen> {
                   );
                 }).toList())),
         FutureBuilder(
-          future:
-              ApiManager.getNewsData(sourceId: widget.sources[selectedIndex].id ?? "",q:widget.query ),
+          future: getNews,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -48,7 +68,7 @@ class _TabsScreenState extends State<TabsScreen> {
             if (snapshot.hasError) {
               return Column(
                 children: [
-                  Text("something went wrong"),
+                  Text(snapshot.error!.toString()),
                   TextButton(
                     onPressed: () {},
                     child: Text("Try Again"),
@@ -68,13 +88,14 @@ class _TabsScreenState extends State<TabsScreen> {
                 ],
               );
             }
-            var newsData = snapshot.data?.articles ?? [];
+            articles.addAll(snapshot.data?.articles??[]);
             return Expanded(
               child: ListView.builder(
+                controller: scrollController,
                 itemBuilder: (context, index) {
-                  return NewsItem(newsData[index]);
+                  return NewsItem(articles[index]);
                 },
-                itemCount: newsData.length,
+                itemCount: articles.length,
               ),
             );
           },

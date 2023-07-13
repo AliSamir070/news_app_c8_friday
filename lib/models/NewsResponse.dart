@@ -29,7 +29,7 @@ class NewsResponse {
   String? status;
   String? code;
   String? message;
-  num? totalResults;
+  int? totalResults;
   List<Articles>? articles;
 }
 
